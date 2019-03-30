@@ -5,50 +5,49 @@ import sample.Model.Message;
 
 public class RegisteredUser extends User {
 
-    static String NAME_LESS="no named user";
+    static String NAME_LESS = "no named user";
 
-    String login ;
+    String login;
 
-    String password="123";
-    public RegisteredUser(){
+    String password = "123";
 
-        this.login   = NAME_LESS;
-
-    }
-
-
-    public RegisteredUser(String startLogin){
-        this.login   = startLogin;
+    public RegisteredUser() {
+        super();
+        this.login = NAME_LESS;
 
     }
 
 
-    public void  changeLogin(String newLogin ){
-        this.login=newLogin;
+    public RegisteredUser(String startLogin) {
+        this.login = startLogin;
 
     }
 
 
-    public String  getLogin(){
-       return this.login;
+    public void changeLogin(String newLogin) {
+        this.login = newLogin;
 
     }
 
-    public boolean sigIn( String inputPassword){
-        if(this.password.equals(inputPassword))return true;
+
+    public String getLogin() {
+        return this.login;
+
+    }
+
+    public boolean sigIn(String inputPassword) {
+        if (this.password.equals(inputPassword)) return true;
         return false;
 
 
     }
 
     @Override
-    public Message createNewMessage(String inputTxt ){
-        Message newMessage= new  Message(inputTxt,this.login);
+    public Message createNewMessage(String inputTxt) {
+        Message newMessage = new Message(inputTxt, this.login);
         return newMessage;
 
     }
-
-
 
 
 }

@@ -10,12 +10,13 @@ public class Controller {
     private RegisteredUser user;
     private Admin admin;
     private int mode;
-    private static String ADMIN_NAME="Admin";
+    private int SCREEN_SIZE=5;
+
     public Controller(){
 
     this.user=new RegisteredUser();
-    this.admin= new Admin(ADMIN_NAME);
-    this.forum= this.user.getForum();
+
+    this.forum= new Forum();//this.user.getForum();
     this.mode=0;
     }
 
@@ -23,7 +24,7 @@ public class Controller {
     public ArrayList<String> addMessage(String inputString){
     this.forum.addMessage(user.createNewMessage(inputString));
 
-    return this.forum.getMessages(5);
+    return this.forum.getMessages(SCREEN_SIZE);
     }
 
 
@@ -39,7 +40,7 @@ public class Controller {
 
        if(user.getLogin().equals(admin.getLogin()))this.forum.deleteMessage(number);
 
-           return this.forum.getMessages(5);
+           return this.forum.getMessages(SCREEN_SIZE);
     }
 
 
@@ -49,7 +50,7 @@ public class Controller {
     public ArrayList<String> getMessages(int number){
 
 
-        return this.forum.getMessages(5);
+        return this.forum.getMessages(number);
     }
 
     public void sigIn(String newLogin){

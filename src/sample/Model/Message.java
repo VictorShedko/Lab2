@@ -21,7 +21,7 @@ public class Message {
         return this.tetxMessage;
 
     }
-    public String getname(){
+    public String getName(){
 
         return this.sender;
 

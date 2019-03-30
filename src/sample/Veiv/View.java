@@ -15,9 +15,7 @@ import sample.Control.Controller;
 
 public class View extends Application {
     private Controller myController;
-    private final static String RANDOM_REQUEST = "random";
-    private final static String ADDER_REQUEST = "add";
-    private final static String SUBTRACTOR_REQUEST = "sub";
+
     AnchorPane forum= new AnchorPane();
     @Override
     public void start(Stage primaryStage) {
@@ -31,7 +29,8 @@ public class View extends Application {
 
 
             TextField inputMessage = new TextField();
-            TextField loginTextFild = new TextField();
+            TextField loginTextField = new TextField();
+
 
 
             AnchorPane.setBottomAnchor(createMessageButton, 70.0);
@@ -39,10 +38,10 @@ public class View extends Application {
             AnchorPane.setRightAnchor(createMessageButton, 30.0);
             AnchorPane.setLeftAnchor(createMessageButton, 600.0);
 
-            AnchorPane.setBottomAnchor(loginTextFild, 540.0);
-            AnchorPane.setTopAnchor(loginTextFild, 30.0);
-            AnchorPane.setRightAnchor(loginTextFild, 100.0);
-            AnchorPane.setLeftAnchor(loginTextFild, 600.0);
+            AnchorPane.setBottomAnchor(loginTextField, 540.0);
+            AnchorPane.setTopAnchor(loginTextField, 30.0);
+            AnchorPane.setRightAnchor(loginTextField, 100.0);
+            AnchorPane.setLeftAnchor(loginTextField, 600.0);
 
 
             AnchorPane.setBottomAnchor(loginButton, 540.0);
@@ -74,7 +73,7 @@ public class View extends Application {
 
 
             root.getChildren().add(inputMessage);
-            root.getChildren().add(loginTextFild);
+            root.getChildren().add(loginTextField);
             root.getChildren().add(createMessageButton);
 
             root.getChildren().add(forum);
@@ -102,7 +101,7 @@ public class View extends Application {
                 public void handle(MouseEvent event) {
 
 
-                    myController.sigIn(loginTextFild.getText());
+                    myController.sigIn(loginTextField.getText());
                     View.this.rebuildForum();
 
                 }
@@ -123,83 +122,101 @@ public class View extends Application {
     }
 
     public View() {
+        try{
         this.myController= new Controller();
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+
 
     }
 
 
     private void rebuildForum(){
-        if(this.myController.getMode()==0) {
-            ArrayList<String> MessageList = this.myController.getMessages(3);
-            forum.getChildren().clear();
-            for (int i = 0; i < MessageList.size(); i++) {
-                Label tempMessage = new Label(MessageList.get(i));
+        ArrayList<String> MessageList = this.myController.getMessages(3);
+        if(MessageList==null){
+            Label tempMessage = new Label("there is no message");
 
-                AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 * i);
-                AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50 * i - 50);
-                AnchorPane.setRightAnchor(tempMessage, 20.0);
-                AnchorPane.setLeftAnchor(tempMessage, 20.0);
+            AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 );
+            AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50  - 50);
+            AnchorPane.setRightAnchor(tempMessage, 20.0);
+            AnchorPane.setLeftAnchor(tempMessage, 20.0);
 
 
-                forum.getChildren().add(tempMessage);
+            forum.getChildren().add(tempMessage);
+
+        }else {
+            if (this.myController.getMode() == 0) {
+
+                forum.getChildren().clear();
+                for (int i = 0; i < MessageList.size(); i++) {
+                    Label tempMessage = new Label(MessageList.get(i));
+
+                    AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 * i);
+                    AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50 * i - 50);
+                    AnchorPane.setRightAnchor(tempMessage, 20.0);
+                    AnchorPane.setLeftAnchor(tempMessage, 20.0);
+
+
+                    forum.getChildren().add(tempMessage);
+                }
             }
-        }
-        if(this.myController.getMode()==1) {
-            ArrayList<String> MessageList = this.myController.getMessages(3);
+            if (this.myController.getMode() == 1) {
 
 
-            forum.getChildren().clear();
-            TextField delNumber = new TextField();
-            Button delButton = new Button("del");
 
-            AnchorPane.setBottomAnchor(delNumber, 200.0);
-            AnchorPane.setTopAnchor(delNumber, 0.0);
-            AnchorPane.setRightAnchor(delNumber, 20.0);
-            AnchorPane.setLeftAnchor(delNumber, 600.0);
+                forum.getChildren().clear();
+                TextField delNumber = new TextField();
+                Button delButton = new Button("del");
 
-            AnchorPane.setBottomAnchor(delButton, 200.0);
-            AnchorPane.setTopAnchor(delButton, 0.0);
-            AnchorPane.setRightAnchor(delButton, 80.0);
-            AnchorPane.setLeftAnchor(delButton, 500.0);
+                AnchorPane.setBottomAnchor(delNumber, 200.0);
+                AnchorPane.setTopAnchor(delNumber, 0.0);
+                AnchorPane.setRightAnchor(delNumber, 20.0);
+                AnchorPane.setLeftAnchor(delNumber, 600.0);
 
-
-            delButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
+                AnchorPane.setBottomAnchor(delButton, 200.0);
+                AnchorPane.setTopAnchor(delButton, 0.0);
+                AnchorPane.setRightAnchor(delButton, 80.0);
+                AnchorPane.setLeftAnchor(delButton, 500.0);
 
 
-                    myController.dellMessage(Integer.parseInt(delNumber.getText()));
+                delButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent event) {
 
-                    View.this.rebuildForum();
+
+                        myController.dellMessage(Integer.parseInt(delNumber.getText()));
+
+                        View.this.rebuildForum();
+
+
+                    }
+                });
+
+
+                forum.getChildren().add(delButton);
+
+                forum.getChildren().add(delNumber);
+
+
+                for (int i = 0; i < MessageList.size(); i++) {
+                    Label tempMessage = new Label(MessageList.get(i));
+
+
+                    AnchorPane.setBottomAnchor(delButton, 25.0 + 50 * i);
+                    AnchorPane.setTopAnchor(delButton, 250 - 25.0 - 50 * i - 50);
+                    AnchorPane.setRightAnchor(delButton, 20.0);
+                    AnchorPane.setLeftAnchor(delButton, 600.0);
+
+                    AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 * i);
+                    AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50 * i - 50);
+                    AnchorPane.setRightAnchor(tempMessage, 80.0);
+                    AnchorPane.setLeftAnchor(tempMessage, 20.0);
+
+
+                    forum.getChildren().add(tempMessage);
 
 
                 }
-            });
-
-
-            forum.getChildren().add(delButton);
-
-            forum.getChildren().add(delNumber);
-
-
-            for (int i = 0; i < MessageList.size(); i++) {
-                Label tempMessage = new Label(MessageList.get(i));
-
-
-
-                AnchorPane.setBottomAnchor(delButton, 25.0 + 50 * i);
-                AnchorPane.setTopAnchor(delButton, 250 - 25.0 - 50 * i - 50);
-                AnchorPane.setRightAnchor(delButton, 20.0);
-                AnchorPane.setLeftAnchor(delButton, 600.0);
-
-                AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 * i);
-                AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50 * i - 50);
-                AnchorPane.setRightAnchor(tempMessage, 80.0);
-                AnchorPane.setLeftAnchor(tempMessage, 20.0);
-
-
-                forum.getChildren().add(tempMessage);
-
-
             }
         }
     }
