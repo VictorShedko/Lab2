@@ -1,4 +1,4 @@
-package sample.Model.Writers;
+package sample.model.writers;
 
 
 public class Admin extends RegisteredUser {

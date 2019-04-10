@@ -1,36 +1,45 @@
-package sample.Veiv;
+package sample.veiv;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+
 import java.util.ArrayList;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.Control.Controller;
-
+import sample.control.Controller;
+import sample.model.Exeption.OutOfTextBoardRangeException;
 
 public class View extends Application {
     private Controller myController;
 
-    AnchorPane forum= new AnchorPane();
+    AnchorPane forum = new AnchorPane();
+    Label errorLabel;
     @Override
     public void start(Stage primaryStage) {
         try {
             AnchorPane root = new AnchorPane();
 
 
+             errorLabel = new Label("");
+
+            AnchorPane.setBottomAnchor(errorLabel, 500.0);
+            AnchorPane.setTopAnchor(errorLabel, 20.0);
+            AnchorPane.setRightAnchor(errorLabel, 500.0);
+            AnchorPane.setLeftAnchor(errorLabel, 200.0);
+
+
             Button createMessageButton = new Button("Write");
             Button loginButton = new Button("Sig in");
 
 
-
             TextField inputMessage = new TextField();
             TextField loginTextField = new TextField();
-
 
 
             AnchorPane.setBottomAnchor(createMessageButton, 70.0);
@@ -61,38 +70,27 @@ public class View extends Application {
             AnchorPane.setLeftAnchor(inputMessage, 40.0);
 
 
-
-
-
-
-
-
-
-
-
-
-
             root.getChildren().add(inputMessage);
             root.getChildren().add(loginTextField);
             root.getChildren().add(createMessageButton);
+            root.getChildren().add(errorLabel);
 
             root.getChildren().add(forum);
             root.getChildren().add(loginButton);
 
 
-
             //TextField Message = new TextField();
-          //  AnchorPane.setBottomAnchor(Message, 0.0);
+            //  AnchorPane.setBottomAnchor(Message, 0.0);
             //AnchorPane.setTopAnchor(Message, 0.0);
-          //  AnchorPane.setRightAnchor(Message, 0.0);
-           // AnchorPane.setLeftAnchor(Message, 0.0);
-           // forum.getChildren().add(Message);
+            //  AnchorPane.setRightAnchor(Message, 0.0);
+            // AnchorPane.setLeftAnchor(Message, 0.0);
+            // forum.getChildren().add(Message);
 
             createMessageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent event) {
 
 
-                myController.addMessage(inputMessage.getText());
+                    myController.addMessage(inputMessage.getText());
 
                     View.this.rebuildForum();
                 }
@@ -108,44 +106,40 @@ public class View extends Application {
             });
 
 
-
-
-
-
             Scene scene = new Scene(root, 800, 600);
             primaryStage.setTitle("Random Wandering");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public View() {
-        try{
-        this.myController= new Controller();
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
+        try {
+            this.myController = new Controller();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
 
-    private void rebuildForum(){
-        ArrayList<String> MessageList = this.myController.getMessages(3);
-        if(MessageList==null){
+    private void rebuildForum() {
+        ArrayList<String> MessageList = (ArrayList<String>) this.myController.getMessages(3);
+        if (MessageList == null) {
             Label tempMessage = new Label("there is no message");
 
-            AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50 );
-            AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50  - 50);
+            AnchorPane.setBottomAnchor(tempMessage, 25.0 + 50);
+            AnchorPane.setTopAnchor(tempMessage, 250 - 25.0 - 50 - 50);
             AnchorPane.setRightAnchor(tempMessage, 20.0);
             AnchorPane.setLeftAnchor(tempMessage, 20.0);
 
 
             forum.getChildren().add(tempMessage);
 
-        }else {
+        } else {
             if (this.myController.getMode() == 0) {
 
                 forum.getChildren().clear();
@@ -162,7 +156,6 @@ public class View extends Application {
                 }
             }
             if (this.myController.getMode() == 1) {
-
 
 
                 forum.getChildren().clear();
@@ -184,10 +177,15 @@ public class View extends Application {
                     public void handle(MouseEvent event) {
 
 
+                        try {
+
+
                         myController.dellMessage(Integer.parseInt(delNumber.getText()));
 
                         View.this.rebuildForum();
-
+                        }catch (OutOfTextBoardRangeException ex){
+                            View.this.errorLabel.setText("out of range ,last message has number"+ex.getNumber());
+                        }
 
                     }
                 });
@@ -220,8 +218,6 @@ public class View extends Application {
             }
         }
     }
-
-
 
 
 }

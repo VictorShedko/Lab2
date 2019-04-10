@@ -1,7 +1,7 @@
-package sample.Model.Writers;
+package sample.model.writers;
 
 
-import sample.Model.Message;
+import sample.model.Message;
 
 public class RegisteredUser extends User {
 

@@ -1,7 +1,7 @@
-package sample.Model.Writers;
+package sample.model.writers;
 
-import sample.Model.Forum;
-import sample.Model.Message;
+import sample.model.Forum;
+import sample.model.Message;
 
 
 public class User {

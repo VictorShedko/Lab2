@@ -1,9 +1,7 @@
-package sample.Model;
+package sample.model;
 
-import javafx.beans.binding.StringBinding;
-import sample.Model.Writers.Admin;
+import sample.model.Exeption.OutOfTextBoardRangeException;
 
-import java.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ public class Forum {
     private List<Message> messageList;
 
     public List<Message> getMessageList() {
-        if(messageList == null)return this.messageList=new ArrayList<>();
+        if (messageList == null) return this.messageList = new ArrayList<>();
         return messageList;
     }
 
@@ -24,20 +22,19 @@ public class Forum {
 
     }
 
-    public void deleteMessage(int numder) {
-        if ((numder <= getMessageList().size()) && (numder > 0)){
-            messageList.remove(numder);
-        }
-        else{
+    public void deleteMessage(int number) throws OutOfTextBoardRangeException {
+        if ((number <= getMessageList().size()) && (number > 0)) {
+            messageList.remove(number);
+        } else {
 
-            //throw
+            throw new OutOfTextBoardRangeException("out of range",getMessageList().size());//throw
         }
 
     }
 
     public List<String> getMessages(int numberOfMessages) {
-        numberOfMessages= numberOfMessages > this.messageList.size()? this.messageList.size():numberOfMessages;
-        if(this.messageList==null)return null;
+        numberOfMessages = numberOfMessages > this.messageList.size() ? this.messageList.size() : numberOfMessages;
+        if (this.messageList == null) return null;
         List<String> textList = new ArrayList<>();
         for (int index = 0; index < numberOfMessages; index++) {
             Message temp = this.messageList.get(index);

@@ -1,12 +1,12 @@
-package sample.Create;
-import sample.Veiv.View;
+package sample.create;
+import sample.veiv.View;
 
 public class CreateUi {
 
     public static void generateWindow(String[] args){
 
         View myView= new View();
-        myView.launch(View.class,args);
+        myView.launch(View.class, args);
 
 
     }

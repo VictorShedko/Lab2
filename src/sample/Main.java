@@ -1,10 +1,9 @@
 package sample;
 
 
-import sample.Create.*;
+import sample.create.*;
 
 public class Main {
-
 
 
     public static void main(String[] args) {
