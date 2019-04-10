@@ -4,7 +4,7 @@ import sample.model.Forum;
 import sample.model.writers.*;
 
 import java.util.List;
-import sample.model.Exeption.OutOfTextBoardRangeException;
+import sample.model.exeption.OutOfTextBoardRangeException;
 public class Controller {
     private Forum forum;
     private RegisteredUser user;
@@ -15,15 +15,20 @@ public class Controller {
     public Controller() {
 
         this.user = new RegisteredUser();
-
+        this.admin = new Admin("Admin");
         this.forum = new Forum();//this.user.getForum();
         this.mode = 0;
     }
 
 
     public List<String> addMessage(String inputString) {
-        this.forum.addMessage(user.createNewMessage(inputString));
 
+        int b=2;
+        int c=2;
+
+
+        this.forum.addMessage(user.createNewMessage(inputString));
+        int a =1;
         return this.forum.getMessages(SCREEN_SIZE);
     }
 

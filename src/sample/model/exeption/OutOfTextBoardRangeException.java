@@ -1,4 +1,4 @@
-package sample.model.Exeption;
+package sample.model.exeption;
 
 public class OutOfTextBoardRangeException extends Exception {
 

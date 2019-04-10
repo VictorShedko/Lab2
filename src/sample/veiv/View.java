@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.control.Controller;
-import sample.model.Exeption.OutOfTextBoardRangeException;
+import sample.model.exeption.OutOfTextBoardRangeException;
 
 public class View extends Application {
     private Controller myController;

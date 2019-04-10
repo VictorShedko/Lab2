@@ -1,6 +1,6 @@
 package sample.model;
 
-import sample.model.Exeption.OutOfTextBoardRangeException;
+import sample.model.exeption.OutOfTextBoardRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Forum {
     }
 
     public void addMessage(Message input) {
-        this.messageList.add(0, input);
+        this.getMessageList().add(0, input);
 
 
     }
@@ -33,8 +33,9 @@ public class Forum {
     }
 
     public List<String> getMessages(int numberOfMessages) {
-        numberOfMessages = numberOfMessages > this.messageList.size() ? this.messageList.size() : numberOfMessages;
         if (this.messageList == null) return null;
+        numberOfMessages = numberOfMessages > this.messageList.size() ? this.messageList.size() : numberOfMessages;
+
         List<String> textList = new ArrayList<>();
         for (int index = 0; index < numberOfMessages; index++) {
             Message temp = this.messageList.get(index);

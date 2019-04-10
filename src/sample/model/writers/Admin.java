@@ -1,5 +1,5 @@
 package sample.model.writers;
-
+import sample.model.exeption.OutOfTextBoardRangeException;
 
 public class Admin extends RegisteredUser {
 
@@ -8,7 +8,14 @@ public class Admin extends RegisteredUser {
     }
 
     public void dellMessage(int number) {
-        this.ownForum.deleteMessage(number);
+        try {
+            this.ownForum.deleteMessage(number);
+
+        }catch (OutOfTextBoardRangeException ex){
+
+
+        }
+
 
 
     }
